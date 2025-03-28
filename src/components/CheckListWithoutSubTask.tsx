@@ -1,17 +1,16 @@
-'use client';
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Book,
   FileText,
   CreditCard,
   Banknote,
-  Mail,
   File,
   PenTool,
   Check,
   Newspaper,
-} from 'lucide-react';
+} from "lucide-react";
 
 interface CheckListWithoutSubTaskProps {
   title: string;
@@ -22,17 +21,22 @@ const iconMap = {
   Passport: <Book className="text-blue-primary" />,
   COE: <FileText className="text-blue-primary" />,
   Visa: <CreditCard className="text-blue-primary" />,
-  'Financial Statement': <Banknote className="text-blue-primary" />,
-  'Cover Letter': <Newspaper className="text-blue-primary" />,
-  'Parent Letter': <File className="text-blue-primary" />,
-  'Recommendation Letter': <PenTool className="text-blue-primary" />,
+  "Financial Statement": <Banknote className="text-blue-primary" />,
+  "Cover Letter": <Newspaper className="text-blue-primary" />,
+  "Parent Letter": <File className="text-blue-primary" />,
+  "Recommendation Letter": <PenTool className="text-blue-primary" />,
 };
 
-const CheckListWithoutSubTask: React.FC<CheckListWithoutSubTaskProps> = ({ title, items }) => {
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+const CheckListWithoutSubTask: React.FC<CheckListWithoutSubTaskProps> = ({
+  title,
+  items,
+}) => {
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   const handleCheckboxChange = (item: string) => {
-    setCheckedItems(prev => ({
+    setCheckedItems((prev) => ({
       ...prev,
       [item]: !prev[item],
     }));
@@ -51,7 +55,7 @@ const CheckListWithoutSubTask: React.FC<CheckListWithoutSubTaskProps> = ({ title
       <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
         <motion.div
           className="bg-blue-primary h-3 rounded-full"
-          initial={{ width: '0%' }}
+          initial={{ width: "0%" }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.3 }}
         />
@@ -64,11 +68,16 @@ const CheckListWithoutSubTask: React.FC<CheckListWithoutSubTaskProps> = ({ title
 
       {/* Checklist */}
       {items.map((item, index) => (
-        <div key={index} className="bg-gray-100 rounded-xl p-4 shadow-md mt-4 max-w-[300px]">
+        <div
+          key={index}
+          className="bg-gray-100 rounded-xl p-4 shadow-md mt-4 max-w-[300px]"
+        >
           <label className="flex items-center py-2">
             {/* Item text & icon (Left) */}
             <span className="text-md flex items-center space-x-2">
-              {iconMap[item] || <span className="w-5 h-5 bg-gray-300 rounded-full"></span>}
+              {iconMap[item as keyof typeof iconMap] || (
+                <span className="w-5 h-5 bg-gray-300 rounded-full"></span>
+              )}
               <span>{item}</span>
             </span>
             {/* Checkbox (Rightmost) */}

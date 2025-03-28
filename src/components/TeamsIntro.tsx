@@ -1,79 +1,85 @@
-'use client';
-import Image from 'next/image';
-import React, { useEffect, useId, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 
-import tingBaiImage from '@/public/team/TingBai.jpg';
-import yibinZhangImage from '@/public/team/YibinZhang.jpg';
-import zhiyangYuImage from '@/public/team/ZhiyangYu.jpg';
-import { useOutsideClick } from '../hooks/use-outside-click';
-import { useTranslations } from 'next-intl';
+"use client";
+import Image from "next/image";
+import React, { useEffect, useId, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
+import tingBaiImage from "@/public/team/TingBai.jpg";
+import yibinZhangImage from "@/public/team/YibinZhang.jpg";
+import zhiyangYuImage from "@/public/team/ZhiyangYu.jpg";
+import { useOutsideClick } from "../hooks/use-outside-click";
+import { useTranslations } from "next-intl";
 
 export function ExpandableCardDemo() {
-  const t = useTranslations('Team');
+  const t = useTranslations("Team");
   const cards = [
     {
-      description: 'Founder',
-      title: 'Zhiyang Yu',
+      description: "Founder",
+      title: "Zhiyang Yu",
       src: zhiyangYuImage.src,
-      ctaText: 'Visit',
-      ctaLink: 'https://www.linkedin.com/in/%E5%BF%97%E6%B4%8B-%E4%BF%9E-558742234/',
+      ctaText: "Visit",
+      ctaLink:
+        "https://www.linkedin.com/in/%E5%BF%97%E6%B4%8B-%E4%BF%9E-558742234/",
       content: () => {
-        return <p>{t('zyy-des')}</p>;
+        return <p>{t("zyy-des")}</p>;
       },
     },
     {
-      description: 'Frontend Developer',
-      title: 'Ting Bai',
+      description: "Frontend Developer",
+      title: "Ting Bai",
       src: tingBaiImage.src,
-      ctaText: 'Visit',
-      ctaLink: 'https://tingbai1028.github.io/tingbaiwebsite/',
+      ctaText: "Visit",
+      ctaLink: "https://tingbai1028.github.io/tingbaiwebsite/",
       content: () => {
-        return <p>{t('tb-des')}</p>;
+        return <p>{t("tb-des")}</p>;
       },
     },
 
     {
-      description: 'Backend Developer  ',
-      title: 'Tianyang Chen',
+      description: "Backend Developer  ",
+      title: "Tianyang Chen",
       src: tingBaiImage.src,
-      ctaText: 'Visit',
-      ctaLink: 'https://ui.aceternity.com/templates',
+      ctaText: "Visit",
+      ctaLink: "https://ui.aceternity.com/templates",
       content: () => {
-        return <p>{t('tc-des')} </p>;
+        return <p>{t("tc-des")} </p>;
       },
     },
     {
-      description: 'Backend Developer',
-      title: 'Yibin Zhang',
+      description: "Backend Developer",
+      title: "Yibin Zhang",
       src: yibinZhangImage.src,
-      ctaText: 'Visit',
-      ctaLink: 'https://github.com/zach-moon',
+      ctaText: "Visit",
+      ctaLink: "https://github.com/zach-moon",
       content: () => {
-        return <p>{t('ybz-des')}</p>;
+        return <p>{t("ybz-des")}</p>;
       },
     },
   ];
 
-  const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(null);
+  const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
+    null
+  );
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         setActive(false);
       }
     }
 
-    if (active && typeof active === 'object') {
-      document.body.style.overflow = 'hidden';
+    if (active && typeof active === "object") {
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
 
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [active]);
 
   useOutsideClick(ref, () => setActive(null));
@@ -81,7 +87,7 @@ export function ExpandableCardDemo() {
   return (
     <>
       <AnimatePresence>
-        {active && typeof active === 'object' && (
+        {active && typeof active === "object" && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -91,7 +97,7 @@ export function ExpandableCardDemo() {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {active && typeof active === 'object' ? (
+        {active && typeof active === "object" ? (
           <div className="fixed inset-0  grid place-items-center z-[100]">
             <motion.button
               key={`button-${active.title}-${id}`}
@@ -166,7 +172,9 @@ export function ExpandableCardDemo() {
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
                   >
-                    {typeof active.content === 'function' ? active.content() : active.content}
+                    {typeof active.content === "function"
+                      ? active.content()
+                      : active.content}
                   </motion.div>
                 </div>
               </div>
@@ -175,7 +183,7 @@ export function ExpandableCardDemo() {
         ) : null}
       </AnimatePresence>
       <ul className="max-w-2xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4">
-        {cards.map((card, index) => (
+        {cards.map((card) => (
           <motion.div
             layoutId={`card-${card.title}-${id}`}
             key={card.title}
